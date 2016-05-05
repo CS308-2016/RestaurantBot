@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Restaurant Bot - Pending Orders</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <style>
+        td, th{
+            text-align:center;
+            float: center;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Restaurant Bot</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid col-xs-offset-3 col-xs-6">
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Table Number
+                    </th>
+                    <th>
+                        Dish Number
+                    </th>
+                    <th>
+                        Bot Number
+                    </th>
+                    <th>
+                        Order Position
+                    </th>
+                    <th>
+                        Order made
+                    </th>
+                </tr>
+                {% for order in orders_left %}
+                <tr id="{{order.id}}">
+                    <td>
+                        {{order.table_num}}
+                    </td>
+                    <td>
+                        {{order.dish_num}}
+                    </td>
+                    <td>
+                        <select name="bot_num" class="form-control" id="bot_num_{{order.id}}" placeholder="0">
+                            {% for i in num_bots %}
+                            <option value="{{ i|add:1 }}">{{ i|add:1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <select name="pos_num" class="form-control" id="pos_num_{{order.id}}" placeholder="0">
+                            {% for i in num_positions %}
+                            <option value="{{ i|add:1 }}">{{ i|add:1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+                    <td>
+                        <button class="btn btn-success order_done" order_id={{ order.id }}> 
+                            Order Made
+                        </button>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+    <script>
+        $(".order_done").click(function(){
+            var order_id = $(this).attr('order_id');
+            var dict = {};
+            dict["order_id"] = order_id;
+            dict["num_bot"] = $('#bot_num_'+order_id).val();
+            dict["num_pos"] = $('#pos_num_'+order_id).val();
+            $.ajax({
+                type: "post",
+                url: "{% url 'orders_left' %}",
+                data: dict,
+                dataType:"json",
+                success: function(data, status, jqXHR){
+                    $('#'+order_id).remove();
+                },
+                error: function (jqXHR, status, err) {
+                    alert("Bot busy, chef!!");
+                },
+                complete: function (jqXHR, status) {
+                    console.log(order_id);
+                },
+            });
+        });
+    </script>
+
+</body>
+</html>

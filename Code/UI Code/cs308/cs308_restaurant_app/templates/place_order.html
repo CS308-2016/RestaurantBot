@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Restaurant Bot - Place Order</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Restaurant Bot</a>
+                </div>
+            </div>
+        </nav>
+        <form method="POST">{% csrf_token %}
+            <div class="form-group col-xs-6">
+                <label for="table_num">Table Number</label>
+                <select name="table_num" class="form-control" id="table_num" placeholder="0">
+                    {% for i in num_tables %}
+                    <option value="{{ i|add:1 }}">{{ i|add:1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group col-xs-6">
+                <label for="dish_num">Dish Number</label>
+                <select name="dish_num" class="form-control" id="dish_num" placeholder="0">
+                    {% for i in num_dishes %}
+                    <option value="{{ i|add:1 }}">{{ i|add:1 }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary form-control">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+
+</html>

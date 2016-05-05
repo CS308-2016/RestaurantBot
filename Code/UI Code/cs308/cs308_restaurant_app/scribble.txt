@@ -1,0 +1,30 @@
+alc_path
+{
+	bfs()
+}
+
+bfs()
+{
+	while !destination
+		4 direction?
+}
+
+
+0 - up,
+1 - right
+2 - down
+3 - left
+direction : 0-3.
+
+changeX = [0, 1, 0, -1]
+changeY = [1, 0, -1, 0]
+
+command
+right : changes direction +1
+left : changes direction -1
+forward : keeps same
+back : +2
+
+current direc + command , check for valid points. insert it in Q 
+
+in case u wanaa go home. that direction is valid as well.

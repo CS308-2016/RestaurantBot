@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Restaurant Bot - Pending Orders</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+    <style>
+        td, th{
+            text-align:center;
+            float: center;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">Restaurant Bot</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid col-xs-offset-3 col-xs-6">
+            <h3 class="center">
+                Pending orders for table no. {{ table_num }}
+            </h3>
+            <table class="table table-bordered">
+                <tr>
+                    <th>
+                        Table Number
+                    </th>
+                    <th>
+                        Dish Number
+                    </th>
+                    <th>
+                        Order placing time
+                    </th>
+                </tr>
+                {% for order in orders_left %}
+                <tr id="{{order.id}}">
+                    <td>
+                        {{order.table_num}}
+                    </td>
+                    <td>
+                        {{order.dish_num}}
+                    </td>
+                    <td>
+                        {{order.created_at}}
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+</body>
+
+
+</html>
